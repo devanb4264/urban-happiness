@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express')
 const app = express()
 
@@ -6,9 +7,10 @@ console.log("I'm on a node server")
 
 app.use(express.static('./public/'))
 
-
+//cheese hash value
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.uri;
+const uri = process.env.URI;
+//console.log(uri);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -32,7 +34,19 @@ async function run() {
   }
 }
 run().catch(console.dir);
+// function whateverNameOfIt (params) {}
+// ()=>{}
 
+app.get('/mongo', async (req,res)=>{
+  console.log("im in mongo!");
+  await client.connect();
+    // Send a ping to confirm a successful connection
+ let result = await client.db("devans-db").collection("whatever-collection").find({}).toArray();
+ //res.send(result); to send result to browser
+  console.log(result);
+    // db.close();
+
+  })
 
 app.get('/', function (req, res) {
   //outdated way
@@ -43,9 +57,9 @@ app.get('/', function (req, res) {
 })
 
 app.get('/ejs', (req, res)=>{
-    res.render("index", {
-      myServerVariable: "Something from server"
-    })
+    res.render("mongo", {
+      mongoResult: result[0].post
+    });
 })
 
 app.listen(5000)
