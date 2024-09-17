@@ -77,7 +77,8 @@ app.get('/create', async (req, res) => {
 app.get('/update', async (req, res) => {
   console.log("im in /update!");
   await client.connect();
-  let result = await client.db("devans-db").collection("whatever-collection").findOneAndUpdate(
+  let result = await collection.findOneAndUpdate( 
+  {"_id": new ObjectId(req.params.id)}, { $set: {"post": "NEW POST" } }
     {$set: {"post" : "another day"}},
     {$set: {"post" : "the necxt other day"}}
   )});
