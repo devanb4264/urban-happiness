@@ -92,7 +92,6 @@ app.get('/insert', async (req,res)=> {
   await client.connect();
   //point to the collection 
   await client.db("deavns-db").collection("whatever-collection").insertOne({ POST: 'hardcoded POST insert '});
-  await client.db("devans-db").collection("whatever-collection").insertOne({ iJustMadeThisUp: 'hardcoded NEW '});  
   //insert into it
   res.render('insert');
 
