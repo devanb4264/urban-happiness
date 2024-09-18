@@ -67,7 +67,7 @@ app.get('/ejs', (req, res)=>{
     });
 })
 //CRUD OPS
-app.get('/read', async (req,res)=>{
+app.get('/read', async (req, res)=>{
 
   console.log('in /mongo');
   await client.connect();
@@ -75,7 +75,7 @@ app.get('/read', async (req,res)=>{
   console.log('connected?');
   // Send a ping to confirm a successful connection
   
-  let result = await client.db("barrys-db").collection("whatever-collection")
+  let result = await client.db("devans-db").collection("whatever-collection")
     .find({}).toArray(); 
   console.log(result); 
 
