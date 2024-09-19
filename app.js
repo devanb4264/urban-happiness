@@ -1,21 +1,17 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const { urlencoded } = require('body-parser')
 const { ObjectId } = require('mongodb')
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = process.env.URI;
 
 console.log("I'm on a node server")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.use(express.static('./public/'))
-
-//cheese hash value
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.URI;
-//console.log(uri);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
