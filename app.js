@@ -7,7 +7,6 @@ console.log("I'm on a node server")
 
 app.use(express.static('./public/'))
 
-//cheese hash value
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.URI;
 //console.log(uri);
