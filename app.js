@@ -62,10 +62,11 @@ app.get('/', function (req, res) {
 })
 
 app.get('/ejs', (req, res)=>{
-    res.render("mongo", {
-      mongoResult: result[0].post
-    });
+    res.render("index", {
+      myServerVariable: "Something from server"
+    })
 })
+
 //CRUD OPS
 app.get('/read', async (req, res)=>{
 
