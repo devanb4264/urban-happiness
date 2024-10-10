@@ -1,17 +1,20 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const { urlencoded } = require('body-parser')
 const { ObjectId } = require('mongodb')
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = process.env.URI;
 
 console.log("I'm on a node server")
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
 app.use(express.static('./public/'))
+
+//cheese hash value
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = process.env.URI;
+//console.log(uri);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -26,7 +29,6 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
-
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -35,7 +37,6 @@ async function run() {
     await client.close();
   }
 }
-
 run().catch(console.dir);
 // function whateverNameOfIt (params) {}
 // ()=>{}
@@ -51,35 +52,29 @@ app.get('/mongo', async (req,res)=>{
 
   })
 
-app.get('/', async (req, res) => {
-
-  let result = await run();
-
-  console.log("myResults: ", result);
-
-  res.render('index', {
-    pageTitle: "Class's Car List",
-    carData: result
-
-  });
-
-});
-
-app.get('/ejs', (req, res)=>{
-    res.render("index", {
-      myServerVariable: "Something from server"
-    })
+app.get('/', function (req, res) {
+  //outdated way
+  //res.send('Hello Node From Express on local devbox :))))')
+  res.sendFile(__dirname + '/index.html')
+  res.sendFile(__dirname + '/styles/style.css')
+  res.sendFile(__dirname + '/scripts/script.js')
 })
 
+app.get('/ejs', (req, res)=>{
+    res.render("mongo", {
+      mongoResult: result[0].post
+    });
+})
 //CRUD OPS
-app.get('/', async (req, res)=>{
+app.get('/read', async (req,res)=>{
 
+  console.log('in /mongo');
   await client.connect();
   
   console.log('connected?');
   // Send a ping to confirm a successful connection
   
-  let result = await client.db("devans-db").collection("whatever-collection")
+  let result = await client.db("barrys-db").collection("whatever-collection")
     .find({}).toArray(); 
   console.log(result); 
 
@@ -89,47 +84,50 @@ app.get('/', async (req, res)=>{
 
 })
 
-app.get('/addVehicle', async (req,res)=> {
+app.get('/insert', async (req,res)=> {
 
+  console.log('in /insert');
   //connect to db,
   await client.connect();
   //point to the collection 
-  await client.db("devans-db").collection("whatever-collection")
+  await client.db("deavns-db").collection("whatever-collection").insertOne({ POST: 'hardcoded POST insert '});
+  await client.db("devans-db").collection("whatever-collection").insertOne({ iJustMadeThisUp: 'hardcoded NEW '});  
   //insert into it
-  await collection.insertOne(req.body);
-  res.redirect('/');
+  res.render('insert');
 
 }); 
 
-app.post('/updateVehicle/:id', async (req,res)=>{
+app.post('/update/:id', async (req,res)=>{
 
-  console.log("body: ", req.body)
+  console.log("req.parms.id: ", req.params.id)
 
   client.connect;
   const collection = client.db("devans-db").collection("whatever-collection");
   let result = await collection.findOneAndUpdate( 
-  {"_id": new ObjectId(req.body.id)}, 
-  {$set: {name: req.body.name, carModel: req.body.carModel}}
+  {"_id": new ObjectId(req.params.id)}, { $set: {"post": "NEW POST" } }
 )
 .then(result => {
   console.log(result); 
-  res.redirect('/');
+  res.redirect('/read');
 })
 }); 
 
-app.post('/deleteVehicle/:id', async (req,res)=>{
+app.post('/delete/:id', async (req,res)=>{
 
-  console.log("body: ", req.body)
+  console.log("req.parms.id: ", req.params.id)
 
   client.connect; 
   const collection = client.db("devans-db").collection("whatever-collection");
   let result = await collection.findOneAndDelete( 
-  {"_id": new ObjectId(req.body.id)})
+  {"_id": new ObjectId(req.params.id)})
 
 .then(result => {
   console.log(result);
-  res.redirect('/');
+  res.redirect('/read');
 })
+
+  //insert into it
+
 })
 
 app.listen(5000)
