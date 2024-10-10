@@ -41,93 +41,63 @@ run().catch(console.dir);
 // function whateverNameOfIt (params) {}
 // ()=>{}
 
-app.get('/mongo', async (req,res)=>{
-  console.log("im in mongo!");
-  await client.connect();
-    // Send a ping to confirm a successful connection
- let result = await client.db("devans-db").collection("whatever-collection").find({}).toArray();
- //res.send(result); to send result to browser
-  console.log(result);
-    // db.close();
-
-  })
 
 app.get('/', function (req, res) {
-  //outdated way
-  //res.send('Hello Node From Express on local devbox :))))')
-  res.sendFile(__dirname + '/index.html')
-  res.sendFile(__dirname + '/styles/style.css')
-  res.sendFile(__dirname + '/scripts/script.js')
-})
+   await client.connect();
+        const result = await client.db("Effective-lamp").collection("Effective-lamp").find({}).toArray();
+        res.render('index', {
+            postData: result
+        });
+});
 
 app.get('/ejs', (req, res)=>{
     res.render("mongo", {
       mongoResult: result[0].post
     });
 })
-//CRUD OPS
-app.get('/read', async (req,res)=>{
 
-  console.log('in /mongo');
-  await client.connect();
-  
-  console.log('connected?');
-  // Send a ping to confirm a successful connection
-  
-  let result = await client.db("barrys-db").collection("whatever-collection")
-    .find({}).toArray(); 
-  console.log(result); 
+//CRUD OPS]
+//read
+app.get('/', async (req, res) => {
+        await client.connect();
+        const result = await client.db("dean's-db").collection("whatever-collection").find({}).toArray();
+        res.render('index', {
+            postData: result
+        });
+      });
 
-  res.render('mongo', {
-    postData : result
-  });
 
-})
 
-app.get('/insert', async (req,res)=> {
+//insert
+app.post('/saveConverted', async (req, res) => {
+    const { convertedText } = req.body;
+        await client.connect();
+        await client.db("devan's-db").collection("whatever-collection").insertOne({ post: convertedText });
+        res.redirect('/');
+});
 
-  console.log('in /insert');
-  //connect to db,
-  await client.connect();
-  //point to the collection 
-  await client.db("deavns-db").collection("whatever-collection").insertOne({ POST: 'hardcoded POST insert '});
-  await client.db("devans-db").collection("whatever-collection").insertOne({ iJustMadeThisUp: 'hardcoded NEW '});  
-  //insert into it
-  res.render('insert');
+//update
+app.post('/update/:id', async (req, res) => {
+    const postId = req.params.id;
+    const { newPost } = req.body;
+        await client.connect();
+        await client.db("Effective-lamp").collection("Effective-lamp").findOneAndUpdate(
+            { "_id": new ObjectId(postId) },
+            { $set: { "post": newPost } }
+        );
+        res.redirect('/');
+});
 
-}); 
-
-app.post('/update/:id', async (req,res)=>{
-
-  console.log("req.parms.id: ", req.params.id)
-
-  client.connect;
-  const collection = client.db("devans-db").collection("whatever-collection");
-  let result = await collection.findOneAndUpdate( 
-  {"_id": new ObjectId(req.params.id)}, { $set: {"post": "NEW POST" } }
-)
-.then(result => {
-  console.log(result); 
-  res.redirect('/read');
-})
-}); 
-
-app.post('/delete/:id', async (req,res)=>{
-
-  console.log("req.parms.id: ", req.params.id)
-
-  client.connect; 
-  const collection = client.db("devans-db").collection("whatever-collection");
-  let result = await collection.findOneAndDelete( 
-  {"_id": new ObjectId(req.params.id)})
-
-.then(result => {
-  console.log(result);
-  res.redirect('/read');
-})
-
+//delete
+app.post('/delete/:id', async (req, res) => {
+    const postId = req.params.id;
+        await client.connect();
+        await client.db("devan's-db").collection("whatever-collection").findOneAndDelete({ "_id": new ObjectId(postId) });
+        res.redirect('/');
+});
   //insert into it
 
 })
 
 app.listen(5000)
+console.log('Server is listening on port 5000');
