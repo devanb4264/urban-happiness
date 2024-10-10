@@ -1,3 +1,121 @@
-<h1>my ejs page</h1>
-<br>
-<%=myServerVariable %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title><%= pageTitle %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+
+</head>
+<body class="container-fluid">
+<link rel="stylesheet" href="/styles/styles.css">
+
+   <div class="row">
+    
+    <div id="titleBar" class="offset-md-3 col-md-8 mx-auto text-center">
+
+        <h1>Class's Car List</h1>
+        <h2>What vehicles do you guys drive?</h2>
+    </div>
+</div>
+
+
+<!-- first card  -->
+
+<div class="row justify-content-center">
+    <div class="card col-md-6 mx-auto">
+        <h3>New Vehicle</h3>
+        <form method="POST" action="/addvehicle">
+            <label for="name">carList: </lable>
+                <br>
+            <input name="name" placeholder="Enter Name">
+            <br>
+            <label for="carModel">Car Model: </label>
+            <br>
+            <input name="carModel" placeholder="Enter car model">
+            <br>
+            <label for="carMake">Car Make: </label>
+            <br>
+            <input name="carMake" placeholder="Enter the car's manufacturer">
+            <br>
+            <label for="year">Car Year: </label>
+            <br>
+            <input name="year" placeholder="Enter its year"
+            <br>
+            <button class="btn btn-primary" type="submit">Add Your Vehicle</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<% for (var i=0; i< carData.length; i++ ) { %>
+    <hr>
+    
+    <div class="row justify-content-center">
+        <div class="card col-md-4 ml-auto ">
+            <h3>Thanks for the input!</h3>
+            <p>Who's car: <%= bookData[i].name %></p>
+
+            <p>Car Model: <%= carData[i].carModel %></p>
+
+            <p>Car Make: <%= carData[i].carManufacturer %></p>
+
+            <p>Car year: <%= carData[i].year %></p>
+
+        </div>
+
+    <br>
+    
+        <div class="card col-md-4">
+            <h3>Update your Vehicle</h3>
+
+                <%= console.log(carData) %>
+
+                    <form method="POST">
+                        <input type="hidden" id="id" name="id" value="<%= carData[i]._id %>"></input>
+                        <label for="name"> Car List:</label>
+                        <input type="text" id="name" name="name" value="<%= carData[i].name %>"></input>
+                        <br><br>
+                        <label for="bookTitle">Book Title: </label>
+                        <input type="text" id="carMake" name="carMake"value="<%= carData[i].carModel %>">
+                        <br><br>
+                        <label for="year">Year Made: </label>
+                        <br><br>
+                        <input type="text" id="year" name="year" value="<%= carData[i].year %>"></input>
+                        <br><br>
+                        <button class="btn btn-success" type="submit" formaction="/updateVehicle">Update Vehicle</button>
+                        <button class="btn btn-warning" type="submit" formaction="/deleteVehicle">Delete Vehicle</button>
+                    </form>
+                    <br>
+        </div>
+
+    </div>
+    <% } %>
+    <br>
+
+<footer> 
+    <a href="/send">send</a> |
+
+</footer>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+<script src="scripts/script.js"></script>
+
+</body>
+
+</html>
