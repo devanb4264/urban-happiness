@@ -26,6 +26,7 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
@@ -50,13 +51,19 @@ app.get('/mongo', async (req,res)=>{
 
   })
 
-app.get('/', function (req, res) {
-  //outdated way
-  //res.send('Hello Node From Express on local devbox :))))')
-  res.sendFile(__dirname + '/index.html')
-  res.sendFile(__dirname + '/styles/style.css')
-  res.sendFile(__dirname + '/scripts/script.js')
-})
+app.get('/', async (req, res) => {
+
+  let result = await run();
+
+  console.log("myResults: ", result);
+
+  res.render('index', {
+    pageTitle: "Class's Car List",
+    carData: result
+
+  });
+
+});
 
 app.get('/ejs', (req, res)=>{
     res.render("index", {
@@ -65,9 +72,8 @@ app.get('/ejs', (req, res)=>{
 })
 
 //CRUD OPS
-app.get('/read', async (req, res)=>{
+app.get('/', async (req, res)=>{
 
-  console.log('in /mongo');
   await client.connect();
   
   console.log('connected?');
@@ -83,45 +89,46 @@ app.get('/read', async (req, res)=>{
 
 })
 
-app.get('/insert', async (req,res)=> {
+app.get('/addVehicle', async (req,res)=> {
 
-  console.log('in /insert');
   //connect to db,
   await client.connect();
   //point to the collection 
-  await client.db("devans-db").collection("whatever-collection").insertOne({ post: 'hardcoded post insert '});
+  await client.db("devans-db").collection("whatever-collection")
   //insert into it
-  res.render('insert');
+  await collection.insertOne(req.body);
+  res.redirect('/');
 
 }); 
 
-app.post('/update/:id', async (req,res)=>{
+app.post('/updateVehicle/:id', async (req,res)=>{
 
-  console.log("req.parms.id: ", req.params.id)
+  console.log("body: ", req.body)
 
   client.connect;
   const collection = client.db("devans-db").collection("whatever-collection");
   let result = await collection.findOneAndUpdate( 
-  {"_id": new ObjectId(req.params.id)}, { $set: {"post": "NEW POST" } }
+  {"_id": new ObjectId(req.body.id)}, 
+  {$set: {name: req.body.name, carModel: req.body.carModel}}
 )
 .then(result => {
   console.log(result); 
-  res.redirect('/read');
+  res.redirect('/');
 })
 }); 
 
-app.post('/delete/:id', async (req,res)=>{
+app.post('/deleteVehicle/:id', async (req,res)=>{
 
-  console.log("req.parms.id: ", req.params.id)
+  console.log("body: ", req.body)
 
   client.connect; 
   const collection = client.db("devans-db").collection("whatever-collection");
   let result = await collection.findOneAndDelete( 
-  {"_id": new ObjectId(req.params.id)})
+  {"_id": new ObjectId(req.body.id)})
 
 .then(result => {
   console.log(result);
-  res.redirect('/read');
+  res.redirect('/');
 })
 })
 
