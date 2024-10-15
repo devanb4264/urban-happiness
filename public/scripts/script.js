@@ -23,10 +23,7 @@ $(document).ready(function() {
       if (inputText !== '') {
           var outputText = convertToNatoPhonetic(inputText);
 
-          // Place the output in the hidden input field for submission
           $('#convertedText').val(outputText);
-
-          // Submit the form to save the result as a new post in MongoDB
           $('#conversionForm').submit();
       }
   });
