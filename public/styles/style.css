@@ -37,11 +37,6 @@ header {
 
 .btn-pink {
   background-color: #ff4f94 !important;
-  color: white !important;
+  color: pink !important;
   border: none;
-}
-
-.btn-pink:hover {
-  background-color: #ff2e63 !important; /* Slightly darker shade on hover */
-  color: white !important; /* Ensure text remains white on hover */
 }
