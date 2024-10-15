@@ -27,3 +27,9 @@ $(document).ready(function() {
           $('#conversionForm').submit();
       }
   });
+
+  //clear button
+  $('#clearBtn').click(function() {
+      $('#textInput').val('');
+  });
+});
