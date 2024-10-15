@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, #ff4f94, #ffadd6); /* Gradient from pink to light pink */
+}
+
+header {
+    background-color: #ff4f94; /* Darker pink header */
+}
+
+.text-white {
+    color: white;
+}
+
+.py-3 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.btn-pink {
+    background-color: #ff4f94 !important; /* Darker pink for the button */
+    color: white !important; /* Ensure the text is white */
+    border: none; /* Remove border if needed */
+}
+
+.btn-pink:hover {
+    background-color: #ff2e63 !important; /* Slightly darker shade on hover */
+    color: white !important; /* Ensure text remains white on hover */
+}
