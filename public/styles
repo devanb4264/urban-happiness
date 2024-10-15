@@ -36,11 +36,12 @@ header {
 }
 
 .btn-pink {
-    background-color: #ff4f94; /* Darker pink for the button */
-    color: white; /* Ensure the text is white */
+    background-color: #ff4f94 !important; /* Darker pink for the button */
+    color: white !important; /* Ensure the text is white */
+    border: none; /* Remove border if needed */
 }
 
 .btn-pink:hover {
-    background-color: #ff2e63; /* Slightly darker shade on hover */
-    color: white; /* Ensure text remains white on hover */
+    background-color: #ff2e63 !important; /* Slightly darker shade on hover */
+    color: white !important; /* Ensure text remains white on hover */
 }
