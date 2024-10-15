@@ -4,3 +4,34 @@ body {
     background: linear-gradient(45deg, #ff007f 25%, #ff77a9 25%, #ff77a9 50%, #ff007f 50%, #ff007f 75%, #ff77a9 75%, #ff77a9 100%);
     background-size: 40px 40px;
 }
+
+header {
+    background-color: #ff007f; /* Vibrant pink header */
+}
+
+.text-white {
+    color: white;
+}
+
+.py-3 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.text-center {
+    text-align: center;
+}
