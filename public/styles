@@ -1,12 +1,11 @@
 body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(45deg, #ff4f94 25%, #ffadd6 25%, #ffadd6 50%, #ff4f94 50%, #ff4f94 75%, #ffadd6 75%, #ffadd6 100%);
-    background-size: 40px 40px;
+    background: linear-gradient(to bottom, #ff4f94, #ffadd6); /* Gradient from pink to light pink */
 }
 
 header {
-    background-color: #ff4f94; /* Lighter vibrant pink header */
+    background-color: #ff4f94; /* Darker pink header */
 }
 
 .text-white {
