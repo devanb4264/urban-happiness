@@ -35,10 +35,10 @@ header {
   text-align: center;
 }
 
-.btn-pink {
+button.btn.btn-pink {
     background-color: #ff4f94 !important; /* Darker pink for the button */
     color: white !important; /* Ensure the text is white */
-    border: none; /* Remove border if needed */
+    border: none; /* Remove border */
 }
 
 .btn-pink:hover {
