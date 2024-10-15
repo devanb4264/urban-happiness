@@ -34,3 +34,13 @@ header {
 .text-center {
     text-align: center;
 }
+
+.btn-pink {
+    background-color: #ff4f94; /* Darker pink for the button */
+    color: white; /* Ensure the text is white */
+}
+
+.btn-pink:hover {
+    background-color: #ff2e63; /* Slightly darker shade on hover */
+    color: white; /* Ensure text remains white on hover */
+}
